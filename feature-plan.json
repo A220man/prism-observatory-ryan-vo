@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "current_feature": "project-skeleton",
+  "features": [
+    {
+      "id": "project-skeleton",
+      "title": "FastAPI + React Project Skeleton with Health Check",
+      "status": "done",
+      "acceptance": [
+        "Backend FastAPI app starts and responds to /healthz",
+        "Frontend Vite React app builds and serves",
+        "Docker Compose brings up both services",
+        "Basic pytest and vitest test suites pass"
+      ],
+      "implementation": [
+        "backend/app/main.py",
+        "backend/app/api/health.py",
+        "backend/requirements.txt",
+        "backend/Dockerfile",
+        "frontend/package.json",
+        "frontend/vite.config.ts",
+        "frontend/src/main.tsx",
+        "frontend/src/App.tsx",
+        "frontend/src/App.css",
+        "frontend/src/index.css",
+        "frontend/index.html",
+        "frontend/Dockerfile",
+        "frontend/nginx.conf",
+        "docker-compose.yaml"
+      ],
+      "tests": [
+        "backend/tests/test_health.py",
+        "frontend/tests/App.test.tsx"
+      ]
+    },
+    {
+      "id": "agent-management",
+      "title": "Agent CRUD and Listing",
+      "status": "planned",
+      "acceptance": [
+        "Create, read, update, delete agents via API",
+        "List agents with pagination and filtering",
+        "Frontend dashboard shows agent list with actions"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "agent-runs",
+      "title": "Agent Run History and Execution",
+      "status": "planned",
+      "acceptance": [
+        "Trigger agent runs via API",
+        "View run history with status and logs",
+        "Frontend shows run details and streaming logs"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "observability",
+      "title": "Metrics and Observability Dashboard",
+      "status": "planned",
+      "acceptance": [
+        "Collect and display agent performance metrics",
+        "Token usage, latency, success rate charts",
+        "Export metrics as CSV/JSON"
+      ],
+      "implementation": [],
+      "tests": []
+    }
+  ]
+}

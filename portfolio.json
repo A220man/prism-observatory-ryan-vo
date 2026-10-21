@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "prism-observatory-ryan-vo",
+  "owner": "A220man",
+  "email": "ryandtvo@gmail.com",
+  "domain": "AI/ML developer tools",
+  "summary": "Work in progress: prism-observatory-ryan-vo",
+  "workflows": [
+    "Create and manage agent definitions with versioning",
+    "Execute agent runs and view real-time logs",
+    "Monitor agent performance metrics including token usage and latency"
+  ],
+  "auth": "oidc-keycloak-saml-broker",
+  "llm_providers": [
+    "openai-compatible",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "status": "work-in-progress"
+}
