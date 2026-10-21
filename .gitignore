@@ -1,0 +1,44 @@
+# Dependencies
+.venv/
+node_modules/
+backend/__pycache__/
+backend/*.pyc
+backend/.pytest_cache/
+frontend/dist/
+frontend/node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Build artifacts
+backend/build/
+backend/dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Testing
+.coverage
+htmlcov/
+
+# Local agent metadata (not product source)
+.antigravitycli/
+.omp/
