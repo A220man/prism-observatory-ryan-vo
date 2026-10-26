@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.api.health import router as health_router
+from app.api.agents import router as agents_router
 
 app = FastAPI(
     title="Prism Observatory",
@@ -8,6 +9,7 @@ app = FastAPI(
 )
 
 app.include_router(health_router, prefix="/api")
+app.include_router(agents_router, prefix="/api")
 
 
 @app.get("/")

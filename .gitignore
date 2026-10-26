@@ -42,3 +42,4 @@ htmlcov/
 # Local agent metadata (not product source)
 .antigravitycli/
 .omp/
+venv/
