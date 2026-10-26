@@ -143,3 +143,98 @@ footer {
   color: #9ca3af;
   font-size: 0.875rem;
 }
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.tabs button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tabs button:hover {
+  color: #1a1a2e;
+}
+
+.tabs button.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+.tab-panel {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.panel-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #6b7280;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #4b5563;
+}

@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-project-skeleton
+agent-management
 
 ## Roadmap
 
@@ -24,12 +24,16 @@ Tests: `backend/tests/test_health.py`, `frontend/tests/App.test.tsx`
 
 ### agent-management — Agent CRUD and Listing
 
-Status: planned
+Status: done
 
 Acceptance:
 - Create, read, update, delete agents via API
 - List agents with pagination and filtering
 - Frontend dashboard shows agent list with actions
+
+Implementation: `backend/app/models/agent.py`, `backend/app/services/agent_service.py`, `backend/app/api/agents.py`, `backend/app/main.py`, `backend/tests/test_agents.py`, `frontend/src/types/agent.ts`, `frontend/src/services/api.ts`, `frontend/src/components/AgentList.tsx`, `frontend/src/components/AgentList.css`, `frontend/src/components/AgentForm.tsx`, `frontend/src/components/AgentForm.css`, `frontend/src/App.tsx`, `frontend/src/App.css`
+
+Tests: `backend/tests/test_agents.py`, `frontend/tests/App.test.tsx`
 
 ### agent-runs — Agent Run History and Execution
 
