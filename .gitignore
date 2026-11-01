@@ -43,3 +43,12 @@ htmlcov/
 .antigravitycli/
 .omp/
 venv/
+dist/
+__pycache__/
+*.pyc
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm

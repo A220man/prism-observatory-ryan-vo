@@ -114,13 +114,14 @@ export function AgentList({ onEdit }: AgentListProps) {
             <th>Description</th>
             <th>Status</th>
             <th>Created</th>
+            <th>Updated</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {agents.length === 0 ? (
             <tr>
-              <td colSpan={5} className="empty-state">
+              <td colSpan={6} className="empty-state">
                 No agents found. Click "Create Agent" to add one.
               </td>
             </tr>
@@ -143,6 +144,7 @@ export function AgentList({ onEdit }: AgentListProps) {
                   </select>
                 </td>
                 <td className="agent-date">{new Date(agent.created_at).toLocaleDateString()}</td>
+                <td className="agent-date">{new Date(agent.updated_at).toLocaleDateString()}</td>
                 <td className="agent-actions">
                   <button onClick={() => onEdit?.(agent)} className="btn btn-edit">
                     Edit
