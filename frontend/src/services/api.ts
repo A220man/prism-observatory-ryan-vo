@@ -23,12 +23,16 @@ export const agentsApi = {
     page_size?: number;
     status?: string;
     name?: string;
+    sort_by?: string;
+    sort_order?: string;
   }): Promise<AgentListResponse> => {
     const searchParams = new URLSearchParams();
     if (params?.page) searchParams.set('page', String(params.page));
     if (params?.page_size) searchParams.set('page_size', String(params.page_size));
     if (params?.status) searchParams.set('status', params.status);
     if (params?.name) searchParams.set('name', params.name);
+    if (params?.sort_by) searchParams.set('sort_by', params.sort_by);
+    if (params?.sort_order) searchParams.set('sort_order', params.sort_order);
     const query = searchParams.toString();
     return fetchJson<AgentListResponse>(`/agents${query ? `?${query}` : ''}`);
   },

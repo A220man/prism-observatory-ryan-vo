@@ -176,3 +176,98 @@ async def test_delete_nonexistent_agent():
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         response = await client.delete("/api/agents/nonexistent")
         assert response.status_code == 404
+@pytest.mark.asyncio
+async def test_create_duplicate_agent_name():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # Create first agent
+        await client.post("/api/agents", json={"name": "Duplicate Test Agent"})
+        # Try to create second agent with same name
+        response = await client.post("/api/agents", json={"name": "Duplicate Test Agent"})
+        assert response.status_code == 409
+        assert "already exists" in response.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_create_duplicate_agent_name_case_insensitive():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # Create first agent
+        await client.post("/api/agents", json={"name": "Case Test Agent"})
+        # Try to create second agent with same name different case
+        response = await client.post("/api/agents", json={"name": "CASE TEST AGENT"})
+        assert response.status_code == 409
+
+
+@pytest.mark.asyncio
+async def test_update_agent_duplicate_name():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # Create two agents
+        resp1 = await client.post("/api/agents", json={"name": "Agent One"})
+        agent1_id = resp1.json()["id"]
+        await client.post("/api/agents", json={"name": "Agent Two"})
+        # Try to update agent one to have agent two's name
+        response = await client.patch(f"/api/agents/{agent1_id}", json={"name": "Agent Two"})
+        assert response.status_code == 409
+        assert "already exists" in response.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_list_agents_sort_by_name():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # Create agents with names that sort differently
+        await client.post("/api/agents", json={"name": "Zeta Agent"})
+        await client.post("/api/agents", json={"name": "Alpha Agent"})
+        await client.post("/api/agents", json={"name": "Beta Agent"})
+        # Sort by name ascending
+        response = await client.get("/api/agents?sort_by=name&sort_order=asc&page_size=10")
+        assert response.status_code == 200
+        data = response.json()
+        names = [agent["name"] for agent in data["items"]]
+        # Should be sorted alphabetically
+        assert names == sorted(names)
+
+
+@pytest.mark.asyncio
+async def test_list_agents_sort_by_created_at_desc():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        await client.post("/api/agents", json={"name": "First Agent"})
+        await client.post("/api/agents", json={"name": "Second Agent"})
+        # Sort by created_at descending (default)
+        response = await client.get("/api/agents?sort_by=created_at&sort_order=desc&page_size=10")
+        assert response.status_code == 200
+        data = response.json()
+        # Second agent should come first (newer)
+        assert data["items"][0]["name"] == "Second Agent"
+        assert data["items"][1]["name"] == "First Agent"
+
+
+@pytest.mark.asyncio
+async def test_list_agents_sort_by_updated_at():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.post("/api/agents", json={"name": "Update Sort Agent"})
+        agent_id = resp.json()["id"]
+        # Update the agent to change updated_at
+        await client.patch(f"/api/agents/{agent_id}", json={"description": "Updated"})
+        # Sort by updated_at descending
+        response = await client.get("/api/agents?sort_by=updated_at&sort_order=desc&page_size=10")
+        assert response.status_code == 200
+        data = response.json()
+        # Updated agent should be first
+        assert data["items"][0]["name"] == "Update Sort Agent"
+
+
+@pytest.mark.asyncio
+async def test_list_agents_invalid_sort_field():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        await client.post("/api/agents", json={"name": "Sort Test Agent"})
+        # Invalid sort field should default to created_at
+        response = await client.get("/api/agents?sort_by=invalid_field&sort_order=asc&page_size=10")
+        assert response.status_code == 200
+        data = response.json()
+        assert len(data["items"]) >= 1

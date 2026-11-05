@@ -28,6 +28,9 @@
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+.sort-select {
+  min-width: 120px;
+}
 
 .error-message {
   background: #fee;
