@@ -7,7 +7,10 @@ router = APIRouter(prefix="/agents", tags=["agents"])
 
 @router.post("", response_model=Agent, status_code=status.HTTP_201_CREATED)
 async def create_agent(agent_data: AgentCreate):
-    return agent_service.create(agent_data)
+    try:
+        return agent_service.create(agent_data)
+    except ValueError as e:
+        raise HTTPException(status_code=409, detail=str(e))
 
 
 @router.get("", response_model=AgentListResponse)
@@ -16,8 +19,10 @@ async def list_agents(
     page_size: int = Query(20, ge=1, le=100, description="Items per page"),
     status: AgentStatus | None = Query(None, description="Filter by status"),
     name: str | None = Query(None, description="Filter by name (partial match)"),
+    sort_by: str = Query("created_at", description="Sort field: name, created_at, updated_at, status"),
+    sort_order: str = Query("desc", description="Sort order: asc or desc"),
 ):
-    return agent_service.list(page=page, page_size=page_size, status=status, name_filter=name)
+    return agent_service.list(page=page, page_size=page_size, status=status, name_filter=name, sort_by=sort_by, sort_order=sort_order)
 
 
 @router.get("/{agent_id}", response_model=Agent)
@@ -30,7 +35,10 @@ async def get_agent(agent_id: str):
 
 @router.patch("/{agent_id}", response_model=Agent)
 async def update_agent(agent_id: str, agent_data: AgentUpdate):
-    agent = agent_service.update(agent_id, agent_data)
+    try:
+        agent = agent_service.update(agent_id, agent_data)
+    except ValueError as e:
+        raise HTTPException(status_code=409, detail=str(e))
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
     return agent

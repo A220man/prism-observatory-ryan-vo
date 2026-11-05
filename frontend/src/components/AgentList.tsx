@@ -18,7 +18,7 @@ export function AgentList({ onEdit }: AgentListProps) {
     total_pages: 1,
   });
   const [filters, setFilters] = useState({ status: '', name: '' });
-
+  const [sort, setSort] = useState({ sort_by: 'created_at', sort_order: 'desc' });
   const fetchAgents = async () => {
     setLoading(true);
     setError(null);
@@ -28,6 +28,8 @@ export function AgentList({ onEdit }: AgentListProps) {
         page_size: pagination.page_size,
         status: filters.status || undefined,
         name: filters.name || undefined,
+        sort_by: sort.sort_by,
+        sort_order: sort.sort_order,
       });
       setAgents(data.items);
       setPagination((prev) => ({
@@ -44,7 +46,8 @@ export function AgentList({ onEdit }: AgentListProps) {
 
   useEffect(() => {
     fetchAgents();
-  }, [pagination.page, filters]);
+  }, [pagination.page, filters, sort]);
+
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= pagination.total_pages) {
@@ -84,25 +87,41 @@ export function AgentList({ onEdit }: AgentListProps) {
     <div className="agent-list">
       <div className="agent-list-header">
         <h2>Agents</h2>
-        <div className="agent-filters">
-          <input
-            type="text"
-            placeholder="Filter by name..."
-            value={filters.name}
-            onChange={(e) => handleFilterChange('name', e.target.value)}
-            className="filter-input"
-          />
-          <select
-            value={filters.status}
-            onChange={(e) => handleFilterChange('status', e.target.value)}
-            className="filter-select"
-          >
-            <option value="">All Statuses</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-            <option value="error">Error</option>
-          </select>
-        </div>
+        <input
+          type="text"
+          placeholder="Filter by name..."
+          value={filters.name}
+          onChange={(e) => handleFilterChange('name', e.target.value)}
+          className="filter-input"
+        />
+        <select
+          value={filters.status}
+          onChange={(e) => handleFilterChange('status', e.target.value)}
+          className="filter-select"
+        >
+          <option value="">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="error">Error</option>
+        </select>
+        <select
+          value={sort.sort_by}
+          onChange={(e) => setSort((prev) => ({ ...prev, sort_by: e.target.value }))}
+          className="filter-select sort-select"
+        >
+          <option value="created_at">Created Date</option>
+          <option value="updated_at">Updated Date</option>
+          <option value="name">Name</option>
+          <option value="status">Status</option>
+        </select>
+        <select
+          value={sort.sort_order}
+          onChange={(e) => setSort((prev) => ({ ...prev, sort_order: e.target.value }))}
+          className="filter-select sort-select"
+        >
+          <option value="desc">Descending</option>
+          <option value="asc">Ascending</option>
+        </select>
       </div>
 
       {error && <div className="error-message">{error}</div>}

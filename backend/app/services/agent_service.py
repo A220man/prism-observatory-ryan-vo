@@ -10,6 +10,11 @@ class AgentService:
         self._agents: dict[str, Agent] = {}
 
     def create(self, agent_data: AgentCreate) -> Agent:
+        # Check for duplicate name
+        for existing in self._agents.values():
+            if existing.name.lower() == agent_data.name.lower():
+                raise ValueError(f"Agent with name '{agent_data.name}' already exists")
+        
         agent_id = str(uuid.uuid4())
         now = datetime.now(UTC)
         agent = Agent(
@@ -33,6 +38,8 @@ class AgentService:
         page_size: int = 20,
         status: Optional[AgentStatus] = None,
         name_filter: Optional[str] = None,
+        sort_by: str = "created_at",
+        sort_order: str = "desc",
     ) -> AgentListResponse:
         agents = list(self._agents.values())
 
@@ -43,7 +50,13 @@ class AgentService:
             name_lower = name_filter.lower()
             agents = [a for a in agents if name_lower in a.name.lower()]
 
-        agents.sort(key=lambda a: a.created_at, reverse=True)
+        # Validate sort_by field
+        valid_sort_fields = {"name", "created_at", "updated_at", "status"}
+        if sort_by not in valid_sort_fields:
+            sort_by = "created_at"
+        
+        reverse = sort_order.lower() == "desc"
+        agents.sort(key=lambda a: getattr(a, sort_by), reverse=reverse)
 
         total = len(agents)
         total_pages = (total + page_size - 1) // page_size if total > 0 else 1
@@ -67,6 +80,14 @@ class AgentService:
             return None
 
         update_data = agent_data.model_dump(exclude_unset=True)
+        
+        # Check for duplicate name if name is being updated
+        if 'name' in update_data:
+            new_name = update_data['name']
+            for existing in self._agents.values():
+                if existing.id != agent_id and existing.name.lower() == new_name.lower():
+                    raise ValueError(f"Agent with name '{new_name}' already exists")
+
         for field, value in update_data.items():
             setattr(agent, field, value)
 
