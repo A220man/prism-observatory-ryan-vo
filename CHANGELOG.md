@@ -1,8 +1,16 @@
 # Changelog
 
+## 1.4.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.3.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
+
+### Added
+- Frontend validation for required agent name field in AgentForm
+- Frontend test coverage for AgentList component (5 tests)
 
 ## 1.2.0 — work-in-progress checkpoint
 
