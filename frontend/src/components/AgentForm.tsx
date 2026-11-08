@@ -54,6 +54,13 @@ export function AgentForm({ agent, onClose, onSuccess }: AgentFormProps) {
     setLoading(true);
     setError(null);
 
+    // Client-side validation
+    if (!formData.name.trim()) {
+      setError('Agent name is required');
+      setLoading(false);
+      return;
+    }
+
     let config: Record<string, unknown> = {};
     try {
       config = JSON.parse(configJson);

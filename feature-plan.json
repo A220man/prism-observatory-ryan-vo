@@ -59,7 +59,8 @@
       ],
       "tests": [
         "backend/tests/test_agents.py",
-        "frontend/tests/App.test.tsx"
+        "frontend/tests/App.test.tsx",
+        "frontend/tests/AgentList.test.tsx"
       ]
     },
     {
