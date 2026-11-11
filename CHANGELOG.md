@@ -1,9 +1,19 @@
 # Changelog
 
-## 1.4.0 — work-in-progress checkpoint
+## 1.5.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
 
+## 1.4.0 — work-in-progress checkpoint
+
+### Fixed
+- AgentList description column now renders "No description" as italic text instead of literal HTML
+- CSS syntax errors in AgentForm.css (missing closing braces, duplicate rules)
+
+### Added
+- "Clear" button for config JSON field in AgentForm modal
+
+Partial code published for continued development. Known issues: STATUS.md.
 ## 1.3.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
