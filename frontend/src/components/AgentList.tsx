@@ -149,7 +149,7 @@ export function AgentList({ onEdit }: AgentListProps) {
               <tr key={agent.id}>
                 <td className="agent-name">{agent.name}</td>
                 <td className="agent-description">
-                  {agent.description || '<em>No description</em>'}
+                  {agent.description ? agent.description : <em>No description</em>}
                 </td>
                 <td>
                   <select

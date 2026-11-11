@@ -100,6 +100,10 @@ export function AgentForm({ agent, onClose, onSuccess }: AgentFormProps) {
     setConfigJson(e.target.value);
   };
 
+  const handleConfigClear = () => {
+    setConfigJson('{}');
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -150,7 +154,18 @@ export function AgentForm({ agent, onClose, onSuccess }: AgentFormProps) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="config">Config (JSON)</label>
+            <div className="form-group-header">
+              <label htmlFor="config">Config (JSON)</label>
+              <button
+                type="button"
+                className="btn btn-small btn-secondary"
+                onClick={handleConfigClear}
+                disabled={loading}
+                aria-label="Clear config"
+              >
+                Clear
+              </button>
+            </div>
             <textarea
               id="config"
               name="config"
