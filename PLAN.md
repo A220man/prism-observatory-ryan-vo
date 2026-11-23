@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-agent-management
+agent-runs
 
 ## Roadmap
 
@@ -37,12 +37,16 @@ Tests: `backend/tests/test_agents.py`, `frontend/tests/App.test.tsx`, `frontend/
 
 ### agent-runs — Agent Run History and Execution
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - Trigger agent runs via API
 - View run history with status and logs
 - Frontend shows run details and streaming logs
+
+Implementation: `backend/app/models/run.py`, `backend/app/services/run_service.py`, `backend/app/api/runs.py`
+
+Tests: `backend/tests/test_runs.py`
 
 ### observability — Metrics and Observability Dashboard
 

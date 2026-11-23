@@ -18,6 +18,7 @@ class RunService:
             status=RunStatus.STARTED,
             created_at=now,
             logs=[],
+            command=run_data.command,
         )
         self._runs[run_id] = run
         return run
