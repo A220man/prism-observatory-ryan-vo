@@ -15,6 +15,9 @@ class RunBase(BaseModel):
     status: RunStatus = Field(default=RunStatus.STARTED, description="Run status")
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC), description="Creation timestamp")
     logs: Optional[List[str]] = Field(default_factory=list, description="Execution logs")
+    command: Optional[str] = Field(
+        default=None, description="Command to execute when running the agent"
+    )
 
 
 class RunCreate(RunBase):

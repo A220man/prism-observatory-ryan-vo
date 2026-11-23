@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "agent-management",
+  "current_feature": "agent-runs",
   "features": [
     {
       "id": "project-skeleton",
@@ -66,14 +66,20 @@
     {
       "id": "agent-runs",
       "title": "Agent Run History and Execution",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Trigger agent runs via API",
         "View run history with status and logs",
         "Frontend shows run details and streaming logs"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/models/run.py",
+        "backend/app/services/run_service.py",
+        "backend/app/api/runs.py"
+      ],
+      "tests": [
+        "backend/tests/test_runs.py"
+      ]
     },
     {
       "id": "observability",
