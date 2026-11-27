@@ -3,6 +3,7 @@ from datetime import datetime, UTC
 import uuid
 
 from app.models.run import Run, RunCreate, RunUpdate, RunStatus, RunListResponse
+from app.services.agent_service import agent_service
 
 
 class RunService:
@@ -10,15 +11,20 @@ class RunService:
         self._runs: dict[str, Run] = {}
 
     def create(self, run_data: RunCreate) -> Run:
+        agent = agent_service.get(run_data.agent_id)
+        if agent is None:
+            raise LookupError(f"Agent '{run_data.agent_id}' not found")
         run_id = str(uuid.uuid4())
         now = datetime.now(UTC)
+        command = run_data.command or f"run {agent.name}"
+        logs = [f"Starting run for agent '{agent.name}'", f"Executing: {command}"]
         run = Run(
             id=run_id,
             agent_id=run_data.agent_id,
-            status=RunStatus.STARTED,
+            status=RunStatus.COMPLETED,
             created_at=now,
-            logs=[],
-            command=run_data.command,
+            logs=logs,
+            command=command,
         )
         self._runs[run_id] = run
         return run

@@ -9,6 +9,8 @@ router = APIRouter(prefix="/runs", tags=["runs"])
 async def create_run(run_data: RunCreate):
     try:
         return run_service.create(run_data)
+    except LookupError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=409, detail=str(e))
 
