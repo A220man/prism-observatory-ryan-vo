@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.8.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
+## 1.8.0 — work-in-progress checkpoint
+
+### Changed
+- `POST /api/runs` now validates the target agent exists (404 for unknown agent) and executes the run to a terminal `completed` state with execution logs, instead of creating a permanently `started` record.
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.7.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
